@@ -192,7 +192,10 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
 .sw button[aria-pressed=true]{border-color:var(--b);background:#F4F8FF}
 #use-fin{height:auto;min-height:48px;padding:12px 18px;white-space:normal;text-align:center;line-height:1.3}
 #use-fin svg{flex:none}
-.sw button{min-width:0;overflow-wrap:anywhere}
+.sw button{min-width:0;word-break:normal;overflow-wrap:normal;hyphens:none;-webkit-hyphens:none}
+.sw button span,.amb button span{word-break:normal;overflow-wrap:normal;hyphens:none}
+/* panneau étroit (400 px) : 2 colonnes pour que les libellés tiennent en entier */
+@media (min-width:1101px){.sw{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .sw button i{flex:none}
 .credit{margin-top:14px;font-size:12.5px;color:var(--g)}
 
