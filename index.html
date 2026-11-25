@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>SODEBAT : estimer mon projet d'ascenseur et composer ma cabine en 3D</title>
+<link rel="icon" href="assets/logos/symbole.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=20261125a">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 8.5c0 3 2.5 6.5 6 6.8l1.3-1.4-1.9-1-1 .8a5 5 0 0 1-2.6-2.6l.8-1-1-1.9z"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+ <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+ <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7zM3 7l9 5 9-5M12 12v10"/></symbol>
+ <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M8 18h2M12 18h4"/></symbol>
+ <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/></symbol>
+ <symbol id="i-build" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3"/></symbol>
+ <symbol id="i-office" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-4v17M12 21V10l7 3v8M8 10h1M8 13h1M8 16h1M15 15h1M15 18h1"/></symbol>
+ <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5h14v16M9 9h1M14 9h1M9 13h1M14 13h1M10 21v-4h4v4"/><path d="M8 5V3h8v2"/></symbol>
+ <symbol id="i-health" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M12 9v8M8 13h8M9 5V3h6v2"/></symbol>
+ <symbol id="i-villa" viewBox="0 0 24 24"><path d="M2 12 9 6l7 6M4 11v9h10v-9M16 12h6v8h-8M7 20v-4h4v4"/></symbol>
+ <symbol id="i-public" viewBox="0 0 24 24"><path d="M3 21h18M4 10h16M12 3 3 8h18zM6 10v8M10 10v8M14 10v8M18 10v8M4 18h16"/></symbol>
+ <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+ <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+ <symbol id="i-lift" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M8 9l-1.5 2h3zM16 13l-1.5-2h3z"/></symbol>
+ <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></symbol>
+ <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.6"/><path d="M9 21a5 5 0 1 1 6.5-7.5M12 7v6h5l2 5M8 10h8"/></symbol>
+ <symbol id="i-box" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M8 14h8v4H8zM12 4v6M9 7l3 3 3-3"/></symbol>
+ <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5 5L13 18l-3 3-4-4 3-3 6.5-6.5a4 4 0 0 1-1-1z"/></symbol>
+ <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+ <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 4a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 6"/></symbol>
+ <symbol id="i-door1" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M12 3v18"/><path d="M9 21v1M15 21v1"/></symbol>
+ <symbol id="i-door2" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M5 8H2M5 16H2M19 8h3M19 16h3"/></symbol>
+ <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17v0"/></symbol>
+ <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+ <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v0"/></symbol>
+ <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v5h5"/></symbol>
+ <symbol id="i-light" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+ <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+</svg>
+
+<header class="top">
+ <div class="wrap top-in">
+  <a class="brand" href="https://leslita06.github.io/sodebat-site/" aria-label="SODEBAT, retour au site"><img src="assets/logos/logo-sodebat-noir.png" alt="SODEBAT Ascenseurs Côte d'Ivoire" width="180" height="33"></a>
+  <nav class="tabs" aria-label="Outils">
+   <a href="#estimer" class="tab on" data-tab="estimer"><svg><use href="#i-calc"/></svg><span>Estimer mon projet</span></a>
+   <a href="#cabine" class="tab" data-tab="cabine"><svg><use href="#i-cube"/></svg><span>Ma cabine en 3D</span></a>
+  </nav>
+  <a class="bt bt-ghost top-sav" href="tel:+2250708083626"><svg><use href="#i-phone"/></svg><span>SAV 24h/24</span></a>
+ </div>
+</header>
+
+<main>
+<!-- ESTIMATION -->
+<section class="view on" id="v-estimer" aria-labelledby="t-est">
+ <div class="wrap">
+  <div class="intro">
+   <p class="eyebrow">Estimation en 2 minutes</p>
+   <h1 id="t-est">Votre ascenseur, <em>chiffré avant la visite.</em></h1>
+   <p class="lede">Quatre questions, des propositions adaptées à votre bâtiment, puis une fourchette de prix et un créneau de visite technique.</p>
+  </div>
+  <div class="wiz">
+   <div class="wz-card">
+    <ol class="prog" id="prog">
+     <li data-s="1"><span>1</span><b>Bâtiment</b></li>
+     <li data-s="2"><span>2</span><b>Projet</b></li>
+     <li data-s="3"><span>3</span><b>Équipement</b></li>
+     <li data-s="4"><span>4</span><b>Vos coordonnées</b></li>
+    </ol>
+    <form id="wz" novalidate>
+     <!-- 1 -->
+     <fieldset class="step on" data-s="1">
+      <legend>Quel est votre bâtiment ?</legend>
+      <div class="cards c3" id="o-bat"></div>
+      <div class="field">
+       <label for="loc">Localisation du projet</label>
+       <div class="chips" id="o-loc"></div>
+       <input id="loc-autre" class="inp" type="text" placeholder="Ville ou commune" hidden>
+      </div>
+     </fieldset>
+     <!-- 2 -->
+     <fieldset class="step" data-s="2">
+      <legend>Quel est l'objet de votre demande ?</legend>
+      <div class="cards c3" id="o-obj"></div>
+      <p class="hint" id="h-obj"></p>
+     </fieldset>
+     <!-- 3 -->
+     <fieldset class="step" data-s="3">
+      <legend>Les caractéristiques</legend>
+      <div class="reco" id="reco"></div>
+      <div class="grid2">
+       <div class="field">
+        <label>Nombre de niveaux desservis</label>
+        <div class="stepper"><button type="button" id="niv-m" aria-label="Un niveau de moins"><svg><use href="#i-minus"/></svg></button><output id="niv">5</output><button type="button" id="niv-p" aria-label="Un niveau de plus"><svg><use href="#i-plus"/></svg></button></div>
+        <small class="fs" id="niv-t">Rez-de-chaussée + 4 étages</small>
+       </div>
+       <div class="field">
+        <label>Type d'accès</label>
+        <div class="seg" id="o-acc"></div>
+       </div>
+      </div>
+      <div class="field">
+       <label>Capacité souhaitée</label>
+       <div class="cards c4 cards-s" id="o-cap"></div>
+      </div>
+      <div class="field">
+       <label>Finitions de la cabine</label>
+       <div class="cards c3 cards-s" id="o-fin"></div>
+       <a class="lnk sm" href="#cabine" data-goto-cabine><svg><use href="#i-cube"/></svg>Voir les finitions en 3D</a>
+      </div>
+     </fieldset>
+     <!-- 4 -->
+     <fieldset class="step" data-s="4">
+      <legend>Où vous envoyer l'estimation ?</legend>
+      <div class="grid2">
+       <div class="field"><label for="f-nom">Votre nom</label><input class="inp" id="f-nom" autocomplete="name" placeholder="Prénom et nom"></div>
+       <div class="field"><label for="f-tel">Téléphone</label><input class="inp" id="f-tel" type="tel" autocomplete="tel" placeholder="+225 07 00 00 00 00"></div>
+       <div class="field"><label for="f-mail">E-mail</label><input class="inp" id="f-mail" type="email" autocomplete="email" placeholder="vous@exemple.ci"></div>
+       <div class="field"><label for="f-ent">Entreprise ou organisation <small>(facultatif)</small></label><input class="inp" id="f-ent" placeholder="Syndic, promoteur, société"></div>
+      </div>
+      <div class="field">
+       <label for="f-det">Détail ou contrainte <small>(facultatif)</small></label>
+       <textarea class="inp" id="f-det" rows="3" placeholder="Ex. gaine existante, bâtiment occupé pendant les travaux, délai souhaité"></textarea>
+      </div>
+      <div class="field">
+       <label>Photo, plan ou document <small>(facultatif)</small></label>
+       <label class="drop" for="f-file"><svg><use href="#i-camera"/></svg><span id="f-file-t"><b>Ajouter une photo</b> de la gaine, du palier ou de l'appareil actuel</span><input id="f-file" type="file" accept="image/*,.pdf" hidden></label>
+       <div class="thumbs" id="thumbs"></div>
+      </div>
+      <label class="ok"><input type="checkbox" id="f-ok"><span>J'accepte que mes données soient utilisées pour être recontacté dans le cadre de cette demande.</span></label>
+     </fieldset>
+     <!-- résultat -->
+     <div class="step res" data-s="5" id="res"></div>
+     <div class="wz-nav" id="wz-nav">
+      <button type="button" class="bt bt-ghost" id="prev"><svg><use href="#i-back"/></svg>Retour</button>
+      <span class="err" id="err" role="alert"></span>
+      <button type="button" class="bt" id="next">Continuer<svg><use href="#i-arrow"/></svg></button>
+     </div>
+    </form>
+   </div>
+   <aside class="sum" id="sum" aria-label="Récapitulatif">
+    <div class="sum-in">
+     <p class="sum-t">Votre projet</p>
+     <dl id="sum-l"></dl>
+     <div class="sum-est" id="sum-est"><small>Estimation indicative</small><b id="sum-v">À partir de l'étape 3</b></div>
+     <p class="sum-n"><svg><use href="#i-info"/></svg>Fourchette indicative, confirmée après visite technique.</p>
+    </div>
+    <a class="sum-3d" href="#cabine" data-goto-cabine><img id="sum-img" src="assets/img/ambiance-noyer.jpg" alt="Aperçu de la cabine" loading="lazy"><span><b>Ma cabine en 3D</b><small id="sum-fin">Noyer, inox brossé</small></span><svg><use href="#i-arrow"/></svg></a>
+   </aside>
+  </div>
+ </div>
+</section>
+
+<!-- CABINE 3D -->
+<section class="view" id="v-cabine" aria-labelledby="t-cab">
+ <div class="wrap">
+  <div class="intro intro-row">
+   <div><p class="eyebrow">Cabine en 3D</p><h1 id="t-cab">Composez votre cabine, <em>voyez-la avant de choisir.</em></h1></div>
+   <p class="lede">Faites tourner la cabine du doigt. Parois, sol, éclairage et main courante changent en direct.</p>
+  </div>
+  <div class="cab">
+   <div class="stage" id="stage">
+    <canvas id="c3d" aria-label="Cabine d'ascenseur en 3D"></canvas>
+    <div class="st-load" id="st-load"><span class="spin"></span>Chargement de la cabine</div>
+    <div class="st-bar">
+     <span class="st-tag" id="st-tag">Noyer, sol pierre, ruban lumineux</span>
+     <div class="st-act">
+      <button class="ib" id="v-face" aria-label="Vue de face"><svg><use href="#i-reset"/></svg></button>
+      <button class="ib" id="v-photo" aria-label="Voir le rendu photo"><svg><use href="#i-camera"/></svg></button>
+     </div>
+    </div>
+    <div class="ph" id="ph" hidden><img id="ph-img" alt=""><button class="ib ph-x" id="ph-x" aria-label="Revenir à la 3D"><svg><use href="#i-cube"/></svg></button><span class="ph-t">Rendu photoréaliste</span></div>
+   </div>
+   <div class="opts">
+    <div class="og"><p class="og-t">Ambiances</p><div class="amb" id="o-amb"></div></div>
+    <div class="og"><p class="og-t">Parois</p><div class="sw" id="o-par"></div></div>
+    <div class="og"><p class="og-t">Sol</p><div class="sw" id="o-sol"></div></div>
+    <div class="og og-row">
+     <div><p class="og-t">Éclairage</p><div class="seg" id="o-lum"></div></div>
+     <div><p class="og-t">Main courante</p><div class="seg" id="o-main"></div></div>
+    </div>
+    <button class="bt bt-full" id="use-fin"><svg><use href="#i-calc"/></svg>Utiliser ces finitions pour mon estimation</button>
+   </div>
+  </div>
+  <p class="credit">Cabine 1 100 × 1 400 mm (630 kg, 8 personnes, accessible en fauteuil roulant). Matières et éclairage du hall : Poly Haven (CC0) ; moteur 3D three.js.</p>
+ </div>
+</section>
+</main>
+
+<footer class="foot">
+ <div class="wrap foot-in">
+  <img src="assets/logos/logo-blanc.png" alt="SODEBAT" width="150" height="28" loading="lazy">
+  <span>SODEBAT Côte d'Ivoire, 2 Plateaux Vallon, Cocody : <a href="tel:+2252722418252">+225 27 22 41 82 52</a>, <a href="mailto:info@sodebat.ci">info@sodebat.ci</a></span>
+ </div>
+</footer>
+<script src="app.js?v=20261125a"></script>
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
+<script type="module" src="cabine.js?v=20261125a"></script>
+</body>
+</html>
