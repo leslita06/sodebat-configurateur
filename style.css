@@ -161,7 +161,8 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
 .r-done svg{color:#16A34A}
 
 /* cabine 3D */
-.cab{display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
+.cab{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px;align-items:start}
+.cab>*{min-width:0}
 .stage{position:relative;border-radius:24px;overflow:hidden;background:radial-gradient(120% 90% at 50% 30%,#F4F6F9,#DCE2EA);height:680px;border:1px solid var(--line);box-shadow:var(--sh)}
 #c3d{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #c3d:active{cursor:grabbing}
@@ -170,8 +171,8 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
 .spin{width:22px;height:22px;border-radius:50%;border:3px solid #CFDAE8;border-top-color:var(--b);animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .st-bar{position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
-.st-tag{background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;color:var(--ink2);pointer-events:auto}
-.st-act{display:flex;gap:8px;pointer-events:auto}
+.st-tag{min-width:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;color:var(--ink2);pointer-events:auto}
+.st-act{display:flex;gap:8px;pointer-events:auto;flex:none}
 .ib{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.94);display:grid;place-items:center;color:var(--b);box-shadow:0 4px 14px -6px rgba(16,24,40,.3)}
 .ph{position:absolute;inset:0;background:#111}
 .ph img{width:100%;height:100%;object-fit:cover}
@@ -180,15 +181,19 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
 .opts{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:20px}
 .og-t{font-weight:700;font-size:14px;color:var(--ink2);margin-bottom:10px}
 .og-row{display:grid;grid-template-columns:1fr;gap:20px}
-.amb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.amb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .amb button{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;text-align:left;background:#fff}
 .amb button img{width:100%;height:84px;object-fit:cover;object-position:50% 45%}
 .amb button span{display:block;padding:7px 9px;font-size:12.5px;font-weight:600;line-height:1.25}
 .amb button[aria-pressed=true]{border-color:var(--b);box-shadow:0 0 0 3px rgba(0,74,173,.12)}
-.sw{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .sw button{display:flex;align-items:center;gap:9px;border:1.5px solid var(--line);border-radius:12px;padding:7px;font-size:13px;font-weight:600;text-align:left;line-height:1.2;background:#fff}
 .sw button i{width:30px;height:30px;border-radius:8px;flex:none;background-size:cover;background-position:center;border:1px solid rgba(0,0,0,.08)}
 .sw button[aria-pressed=true]{border-color:var(--b);background:#F4F8FF}
+#use-fin{height:auto;min-height:48px;padding:12px 18px;white-space:normal;text-align:center;line-height:1.3}
+#use-fin svg{flex:none}
+.sw button{min-width:0;overflow-wrap:anywhere}
+.sw button i{flex:none}
 .credit{margin-top:14px;font-size:12.5px;color:var(--g)}
 
 .foot{background:var(--dk);color:#B8C5D8;padding:22px 0;font-size:13.5px}
@@ -197,7 +202,7 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
 .foot a{color:#fff}
 
 @media (max-width:1100px){
- .wiz,.cab{grid-template-columns:1fr}
+ .wiz,.cab{grid-template-columns:minmax(0,1fr)}
  .sum{position:static}
  .stage{height:560px}
 }
@@ -231,7 +236,11 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
  .r-act .bt{width:100%}
  .stage{height:460px;border-radius:20px}
  .opts{padding:16px}
- .amb button img{height:70px}
- .sw{grid-template-columns:repeat(2,1fr)}
+ .sw{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .amb{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .amb button img{height:96px}
+ .seg button{flex:1 1 auto;min-width:0;padding:0 10px;font-size:13.5px}
+ .st-bar{left:12px;right:12px;bottom:12px;gap:8px}
+ .st-tag{font-size:13px;padding:8px 12px}
  .intro-row .lede{max-width:none}
 }

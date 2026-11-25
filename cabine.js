@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from './assets/vendor/OrbitControls.js';
 import { GLTFLoader } from './assets/vendor/GLTFLoader.js';
 import { RGBELoader } from './assets/vendor/RGBELoader.js';
+import { Reflector } from './assets/vendor/Reflector.js?v=20261125b';
 
 const $ = s => document.querySelector(s);
 const T = 'assets/tex/';
@@ -182,6 +183,50 @@ function apply() {
   scene.environmentIntensity = cfg.lum === 'spot' ? 0.75 : 0.9;
 }
 
+/* Miroir du fond : vrai reflet (plan réfléchissant) dans un cadre inox fin, posé à plat contre la paroi. */
+function buildMirror() {
+  const src = (parts.miroir || [])[0]; if (!src) return;
+  src.updateWorldMatrix(true, false);
+  const bb = new THREE.Box3().setFromObject(src);
+  src.visible = false;
+  const x0 = bb.min.x, x1 = bb.max.x, y0 = bb.min.y, y1 = bb.max.y;
+  const zWall = bb.min.z - 0.0005;           // face avant de la paroi du fond
+  const F = 0.014, E = 0.010;                 // cadre : 14 mm de face, 10 mm d'épaisseur
+  const w = x1 - x0, h = y1 - y0;
+  const res = Math.min(1024, Math.round(1024 * Math.min(devicePixelRatio, 2) / 2) * 2 || 1024);
+  const glass = new Reflector(new THREE.PlaneGeometry(w - 2 * F + 0.004, h - 2 * F + 0.004), {
+    textureWidth: res, textureHeight: Math.round(res * h / w), color: 0x7b7f83, clipBias: 0.003, multisample: 4,
+  });
+  glass.position.set((x0 + x1) / 2, (y0 + y1) / 2, zWall + 0.004);
+  scene.add(glass);
+  // Face avant de la cabine (portes inox fermées, retours, imposte) : visible seulement dans le reflet,
+  // pour que le miroir montre ce qu'il montrerait vraiment, et non le vide du décor.
+  glass.camera.layers.enable(1);
+  const doorM = new M({ color: '#c3c9cf', metalness: 1, roughness: 0.34, roughnessMap: tex('inox_rough.jpg'), normalMap: tex('inox_nor.jpg'), normalScale: new THREE.Vector2(0.15, 0.15), anisotropy: 0.6 });
+  const darkM = new M({ color: '#1a1c20', roughness: 0.7 });
+  const front = (bw, bh, x, y, z, m) => { const o = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, 0.02), m); o.position.set(x, y, z); o.layers.set(1); scene.add(o); };
+  front(0.40, 2.04, 0.355, 1.02, 0.03, doorM);        // vantail gauche
+  front(0.40, 2.04, 0.755, 1.02, 0.03, doorM);        // vantail droit
+  front(0.004, 2.04, 0.555, 1.02, 0.019, darkM);      // joint central
+  front(0.006, 2.04, 0.153, 1.02, 0.019, darkM); front(0.006, 2.04, 0.957, 1.02, 0.019, darkM);
+  // Teinte argentée légère et vignettage de bord, pour lire une glace et non un écran.
+  const tint = new THREE.Mesh(new THREE.PlaneGeometry(w - 2 * F + 0.004, h - 2 * F + 0.004),
+    new M({ color: '#dfe6ea', transparent: true, opacity: 0.06, roughness: 0.05, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03, depthWrite: false }));
+  tint.position.copy(glass.position); tint.position.z += 0.0006; scene.add(tint);
+  const frameM = new M({ color: '#c9cfd4', metalness: 1, roughness: 0.28, roughnessMap: tex('inox_rough.jpg'), normalMap: tex('inox_nor.jpg'), normalScale: new THREE.Vector2(0.1, 0.1) });
+  const bar = (bw, bh, x, y) => {
+    const g2 = new THREE.BoxGeometry(bw, bh, E);
+    const m2 = new THREE.Mesh(g2, frameM); m2.position.set(x, y, zWall + E / 2); scene.add(m2);
+  };
+  bar(w, F, (x0 + x1) / 2, y1 - F / 2);
+  bar(w, F, (x0 + x1) / 2, y0 + F / 2);
+  bar(F, h - 2 * F, x0 + F / 2, (y0 + y1) / 2);
+  bar(F, h - 2 * F, x1 - F / 2, (y0 + y1) / 2);
+  // Ombre de contact du cadre sur la paroi (fine bande sombre sous le cadre).
+  const sh = new THREE.Mesh(new THREE.PlaneGeometry(w + 0.012, h + 0.012), new THREE.MeshBasicMaterial({ color: '#000', transparent: true, opacity: 0.18, depthWrite: false }));
+  sh.position.set((x0 + x1) / 2, (y0 + y1) / 2 - 0.002, zWall + 0.0002); scene.add(sh);
+}
+
 setupLights();
 new RGBELoader().load('assets/3d/hall.hdr', hdr => {
   hdr.mapping = THREE.EquirectangularReflectionMapping;
@@ -196,6 +241,7 @@ new GLTFLoader().load('assets/3d/cabine.glb', g => {
     if (r === 'bouton') o.material = mat('inox');
   });
   scene.add(g.scene);
+  buildMirror();
   apply();
   $('#st-load').classList.add('off');
   window.__CABINE_OK = true;
