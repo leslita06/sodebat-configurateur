@@ -60,19 +60,22 @@ document.addEventListener('click', e => {
   const g = b.dataset.o, k = b.dataset.k;
   if (g === 'amb') cfg = { ...AMB.find(a => a.k === k).c };
   else { cfg[g] = k; if (g === 'paroi') delete cfg.fond; }
-  sync(); apply(); closePhoto();
+  sync(); apply();
+  const a = ambOf(cfg);
+  if (photoMode && a) showPhoto(a); else closePhoto();
 });
-$('#v-photo').addEventListener('click', () => {
-  const a = ambOf(cfg); if (!a) return;
-  $('#ph-img').src = `assets/img/ambiance-${a.k}.jpg`; $('#ph-img').alt = 'Rendu photoréaliste : ' + a.t; $('#ph').hidden = false;
-});
+/* Rendu photoréaliste par défaut ; la 3D sert à tourner autour et à composer librement. */
+let photoMode = true;
+function showPhoto(a) { photoMode = true; $('#ph-img').src = `assets/img/ambiance-${a.k}.jpg`; $('#ph-img').alt = 'Rendu photoréaliste : ' + a.t; $('#ph').hidden = false; }
+$('#v-photo').addEventListener('click', () => { const a = ambOf(cfg); if (a) showPhoto(a); });
 function closePhoto() { $('#ph').hidden = true; }
-$('#ph-x').addEventListener('click', closePhoto);
+$('#ph-x').addEventListener('click', () => { photoMode = false; closePhoto(); });
 $('#use-fin').addEventListener('click', () => {
   const a = ambOf(cfg);
   window.dispatchEvent(new CustomEvent('sodebat:finitions', { detail: { tier: PAROIS[cfg.paroi].tier, label: label(cfg), img: `ambiance-${(a || AMB.find(x => x.c.paroi === cfg.paroi) || AMB[0]).k}.jpg` } }));
 });
 ui();
+showPhoto(ambOf(cfg) || AMB[0]);
 
 /* ---------- Scène ---------- */
 const canvas = $('#c3d');

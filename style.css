@@ -247,3 +247,7 @@ textarea.inp{height:auto;padding:12px 14px;resize:vertical}
  .st-tag{font-size:13px;padding:8px 12px}
  .intro-row .lede{max-width:none}
 }
+.ph img{object-position:center 42%}
+.ph-3d{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#004AAD;border:0;border-radius:12px;padding:10px 14px;font:600 14px/1 inherit;font-family:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.ph-3d svg{width:18px;height:18px}
+.ph-3d:hover{background:#004AAD;color:#fff}
