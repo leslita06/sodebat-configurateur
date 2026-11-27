@@ -220,7 +220,7 @@
     if (e.target.closest('#rdv-ok')) {
       const dd = new Date(st.day + 'T12:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
       const box = $('#r-done'); box.classList.add('on');
-      $('span', box).textContent = `Visite demandée le ${dd} à ${st.hour}. Un technicien SODEBAT vous appelle pour confirmer le créneau.`;
+      $('span', box).innerHTML = `Visite demandée le ${dd} à ${st.hour}. Un technicien SODEBAT vous appelle pour confirmer le créneau.<br><small style="opacity:.8">Côté SODEBAT, votre demande arrive dans les <a href="https://leslita06.github.io/sodebat-maquettes/#demandes" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">demandes de devis</a> du service commercial, avec une alerte par email.</small>`;
     }
   });
 
