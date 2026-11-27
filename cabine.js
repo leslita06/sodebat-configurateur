@@ -91,21 +91,23 @@ const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDraw
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.9;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = false;
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#E4E9F0');
+scene.background = new THREE.Color('#DCD8D2');
 const cam = new THREE.PerspectiveCamera(42, 1, 0.05, 50);
 // Le modèle est en mètres ; ouverture de porte côté +z, cabine 1,10 × 1,40 × 2,20 m.
 const TGT = new THREE.Vector3(0.55, 1.10, -0.70);
-cam.position.set(0.25, 1.30, 3.45);
+const HOME = new THREE.Vector3(0.85, 1.55, 3.7);
+cam.position.copy(HOME);
 const ctl = new OrbitControls(cam, canvas);
 ctl.target.copy(TGT);
 ctl.enableDamping = true; ctl.dampingFactor = 0.08;
 ctl.enablePan = false;
-ctl.minDistance = 2.2; ctl.maxDistance = 5.0;
+ctl.minDistance = 1.9; ctl.maxDistance = 4.2;
 ctl.minPolarAngle = Math.PI * 0.30; ctl.maxPolarAngle = Math.PI * 0.56;
 ctl.minAzimuthAngle = -0.6; ctl.maxAzimuthAngle = 0.6;
-$('#v-face').addEventListener('click', () => { cam.position.set(0.25, 1.30, 3.45); ctl.target.copy(TGT); ctl.update(); });
+$('#v-face').addEventListener('click', () => { cam.position.copy(HOME); ctl.target.copy(TGT); ctl.update(); });
 
 const tl = new THREE.TextureLoader();
 const texCache = {};
@@ -159,7 +161,7 @@ const roleOf = n => {
 };
 const lights = {};
 function setupLights() {
-  scene.add(new THREE.HemisphereLight('#ffffff', '#b9b2a6', 0.35));
+  scene.add(new THREE.HemisphereLight('#ffffff', '#b9b2a6', 0.45));
   const fill = new THREE.DirectionalLight('#ffffff', 0.6); fill.position.set(0.6, 2.2, 3.5); fill.target.position.copy(TGT); scene.add(fill, fill.target);
   const top = new THREE.PointLight('#fff6ea', 2.4, 4, 1.6); top.position.set(0.55, 2.1, -0.72); scene.add(top); lights.top = top;
   lights.spots = [];
@@ -227,6 +229,27 @@ function buildMirror() {
   sh.position.set((x0 + x1) / 2, (y0 + y1) / 2 - 0.002, zWall + 0.0002); scene.add(sh);
 }
 
+
+/* Palier : mur du hall autour de la porte et sol poli devant, pour voir la cabine en situation. */
+function buildHall(root) {
+  const bb = new THREE.Box3().setFromObject(root);
+  const zf = bb.max.z + 0.002, x0 = bb.min.x - 0.01, x1 = bb.max.x + 0.01, top = bb.max.y + 0.01;
+  const wallM = new M({ color: '#cfc6b8', roughness: 0.92 });
+  const pane = (w, h, x, y) => { const o = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallM); o.position.set(x, y, zf); scene.add(o); };
+  pane(3.5 + x0, 3.6, (x0 - 3.5) / 2, 1.8);           // gauche
+  pane(4.6 - x1, 3.6, (x1 + 4.6) / 2, 1.8);           // droite
+  pane(x1 - x0, 3.6 - top, (x0 + x1) / 2, (top + 3.6) / 2); // linteau
+  // Encadrement inox du palier, 6 cm.
+  const fr = new M({ color: '#9aa1a8', metalness: 1, roughness: 0.32 }), d = 0.06, e = 0.03;
+  const box = (w, h, x, y) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, e), fr); o.position.set(x, y, zf + e / 2); scene.add(o); };
+  box(d, top + d, x0 - d / 2, (top + d) / 2); box(d, top + d, x1 + d / 2, (top + d) / 2); box(x1 - x0 + 2 * d, d, (x0 + x1) / 2, top + d / 2);
+  // Sol du palier : granit poli, réfléchissant doux.
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(9, 5), new M({ map: tex('granit_diff.jpg', 1, 4), roughness: 0.22, clearcoat: 0.6, clearcoatRoughness: 0.15 }));
+  fl.rotation.x = -Math.PI / 2; fl.position.set(0.55, -0.002, zf + 2.5); scene.add(fl);
+  // Applique chaude au-dessus de la porte.
+  const wash = new THREE.SpotLight('#fff1dc', 0.9, 5, 0.9, 0.9, 1.2); wash.position.set(0.55, 3.2, zf + 1.4); wash.target.position.set(0.55, 0.6, zf); scene.add(wash, wash.target);
+}
+
 setupLights();
 new RGBELoader().load('assets/3d/hall.hdr', hdr => {
   hdr.mapping = THREE.EquirectangularReflectionMapping;
@@ -241,6 +264,7 @@ new GLTFLoader().load('assets/3d/cabine.glb', g => {
     if (r === 'bouton') o.material = mat('inox');
   });
   scene.add(g.scene);
+  buildHall(g.scene);
   buildMirror();
   apply();
   $('#st-load').classList.add('off');
